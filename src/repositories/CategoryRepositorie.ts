@@ -9,6 +9,6 @@ export interface ICategoryRepository {
     findMany: () => Promise<Category[]>;
     create: (attributes: CreateCategoryAttributes) => Promise<Category>;
     findUnique: (id: number) => Promise<Category | null>;
-    upadate: (id: number, attributes: Partial<CreateCategoryAttributes>) => Promise<Category | null>;
+    update: (id: number, attributes: Partial<CreateCategoryAttributes>) => Promise<Category | null>;
     delete: (id: number) => Promise <Category | null>;
 }

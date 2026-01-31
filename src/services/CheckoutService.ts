@@ -1,6 +1,5 @@
 import { HttpError } from "../errors/HttpError";
 import { ICartProductRepositorie } from "../repositories/CartProductRepositorie";
-import { ICategoryRepository } from "../repositories/CategoryRepositorie";
 import { ICheckoutRepositorie, ItemsProps, PaymentStatus } from "../repositories/CheckoutRepositorie";
 
 export class CheckoutService {

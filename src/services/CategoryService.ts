@@ -27,7 +27,7 @@ export class CategoryService {
 
     async updateCategory( id:number, attributes: Partial<CreateCategoryAttributes> ) {
         await this.categoryExists(id);
-        const updateCategory = await this.categoryRepositorie.upadate(id, attributes);
+        const updateCategory = await this.categoryRepositorie.update(id, attributes);
         return updateCategory;
     }
 
