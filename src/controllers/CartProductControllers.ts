@@ -7,12 +7,10 @@ export class CartProductController {
     constructor(readonly cartProductService: CartProductService) {}
 
     getAllProducts: Handler = async ( req:AuthenticatedRequest , res , next  ) => {
-        try {
-            
+        try {    
             const userId = req.user!.id;
             const productsInCart = await this.cartProductService.getAllProducts(userId);
             res.json(productsInCart)
-
         } catch (error) {
             next(error)
         }
