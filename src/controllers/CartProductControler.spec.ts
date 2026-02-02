@@ -1,13 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { CartProductService } from "../services/CartService";
 import { CartProductController } from "./CartProductControllers";
+import { HttpError } from "../errors/HttpError";
 
 const cartProductServiceMock = {
     addProductCart: vi.fn(),
     getAllProducts: vi.fn(),
     removeProductInCart: vi.fn(),
-    cleanCart: vi.fn(),
-    productExists: vi.fn()
 } as unknown as CartProductService
 
 const addProductCartMock = vi.mocked(cartProductServiceMock.addProductCart);
@@ -23,7 +22,7 @@ describe("CartProductController" , () => {
     });
 
     it("Deve buscar todos os produtos adicionados ao carrinho", async () => {
-        const req: any = {
+        const req: any = { 
             user: {
                 id:1
             }
@@ -52,6 +51,28 @@ describe("CartProductController" , () => {
         }]);
         expect(getAllProductsCartMock).toHaveBeenCalledTimes(1)
         expect(next).not.toHaveBeenCalled()
+    });
+
+    it("Deve lançar um erro se não encontrar os produtos ", async () => {
+         const req: any = { 
+            user: {
+                id:1
+            }
+        }
+        const res: any = {
+            status: vi.fn().mockReturnThis(),
+            json: vi.fn()
+        }
+
+        const next = vi.fn();
+
+        getAllProductsCartMock.mockRejectedValue(new HttpError(404, "Produtos não encontrados"));
+
+        await cartProductControllerMock.getAllProducts(req, res , next);
+
+        expect(getAllProductsCartMock).toHaveBeenCalledTimes(1);
+        expect(next).toHaveBeenCalledWith(expect.any(HttpError))
+        expect(next).toHaveBeenCalledTimes(1);
     });
 
     it("Deve adicionar um produto ao carrinho", async () => {
@@ -90,7 +111,7 @@ describe("CartProductController" , () => {
         expect(addProductCartMock).toHaveBeenCalledWith(1, 1, 1);
         expect(res.status).toHaveBeenCalledWith(201);
         expect(next).not.toHaveBeenCalled();
-        expect(cartProductServiceMock.addProductCart).toHaveBeenCalledTimes(1)
+        expect(addProductCartMock).toHaveBeenCalledTimes(1)
     });
 
     it("Deve remover um produto do carrinho ", async () => {
@@ -127,7 +148,7 @@ describe("CartProductController" , () => {
         });
         expect(removeProductInCartMock).toHaveBeenCalledWith(1, 1);
         expect(next).not.toHaveBeenCalled();
-        expect(cartProductServiceMock.removeProductInCart).toHaveBeenCalledTimes(1)
+        expect(removeProductInCartMock).toHaveBeenCalledTimes(1)
     });
   
 });
