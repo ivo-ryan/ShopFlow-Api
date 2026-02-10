@@ -1,4 +1,4 @@
-import { CartProduct, User, Product, Cart } from "@prisma/client";
+import { CartProduct, Product, } from "@prisma/client";
 import { ICartProductRepositorie } from "../CartProductRepositorie";
 import { prisma } from "../../database/database";
 

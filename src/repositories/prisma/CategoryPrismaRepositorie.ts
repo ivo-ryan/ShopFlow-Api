@@ -22,7 +22,7 @@ export class CategoryPrismaRepository implements ICategoryRepository{
         })
     }
 
-    upadate (id: number, attributes: Partial<CreateCategoryAttributes>) : Promise<Category | null>{
+    update (id: number, attributes: Partial<CreateCategoryAttributes>) : Promise<Category | null>{
         return prisma.category.update({ 
             where: { id },
             data: attributes
