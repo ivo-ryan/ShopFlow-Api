@@ -25,6 +25,7 @@ const jwtServiceMock = {
     secret: "test_secret",
     signToken: vi.fn(),
     verifyToken: vi.fn(),
+    verifyTokenAsync: vi.fn()
 }
 
 const findManyMock = vi.mocked(userRepositorieMock.findMany);
